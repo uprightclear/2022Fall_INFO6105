@@ -106,9 +106,6 @@ ax[0].set_yticks([])
 plt.tight_layout()
 plt.show()
 
-
-
-
 nn = nnm.NeuralNetMLP(n_output=2,
                   n_features=X_train.shape[1],
                   n_hidden=50,
@@ -124,90 +121,7 @@ nn = nnm.NeuralNetMLP(n_output=2,
 
 nn.fit(X_train, y_train, print_progress=True)
 
-
-batches = np.array_split(range(len(nn.cost_)), 100)
-cost_ary = np.array(nn.cost_)
-cost_avgs = [np.mean(cost_ary[i]) for i in batches]
-
-plt.plot(range(len(cost_avgs)), cost_avgs, color='red')
-plt.ylim([0, 6000])
-plt.ylabel('Cost')
-plt.xlabel('Epochs')
-plt.tight_layout()
-#plt.savefig('./figures/cost2.png', dpi=300)
-plt.show()
-
-
-training_accuracy=get_acuuracy(nn, X_train, y_train)
-print('Training accuracy: %.2f%%' %training_accuracy)
-
-test_accuracy=get_acuuracy(nn, X_test, y_test)
-print('Test accuracy: %.2f%%' %test_accuracy)
-
 train_pred = nn.predict(X_train)
 for i in range(len(train_pred)):
     if train_pred[i] != y_train[i]:
         print(train_imgs[i])
-
-y_pred = nn.predict(X_test)
-# fina_list = []
-# fina_list.append(test_imgs)
-# fina_list.append(y_pred)
-# with open('output.csv', 'w') as cf:
-#     csvfile = csv.writer(cf, delimiter=' ')
-#     for column in zip(*[i for i in fina_list]):
-#         csvfile.writerow(column)
-# cf.close()
-
-dataframe = pd.DataFrame({'Image':test_imgs,'Prediction':y_pred})
-dataframe.to_csv("output.csv",sep=',',index=False)
-
-
-
-batches = np.array_split(range(len(nn.cost_)), 1000)
-cost_ary = np.array(nn.cost_)
-cost_avgs = [np.mean(cost_ary[i]) for i in batches]
-
-plt.plot(range(len(cost_avgs)), cost_avgs, color='red')
-plt.ylim([0, 6000])
-plt.ylabel('Cost')
-plt.xlabel('Epochs')
-plt.tight_layout()
-plt.show()
-
-
-
-logreg = LogisticRegression()
-an.model_training(logreg, X_train, y_train)
-
-training_accuracy=get_acuuracy(logreg, X_train, y_train)
-print('Training accuracy: %.2f%%' %training_accuracy)
-
-test_accuracy=get_acuuracy(logreg, X_test, y_test)
-print('Test accuracy: %.2f%%' %test_accuracy)
-
-an.plot_auc_curve(logreg, X_train, y_train)
-
-
-rf = RandomForestClassifier(n_estimators=1000,
-                            criterion='gini',
-                            max_features='sqrt',
-                            n_jobs=-1)
-an.model_training(rf, X_train, y_train)
-
-an.plot_auc_curve(rf, X_test, y_test)
-an.Find_Optimal_Cutoff(rf, X_test, y_test)
-
-training_accuracy=get_acuuracy(rf, X_train, y_train)
-print('Training accuracy: %.2f%%' %training_accuracy)
-
-test_accuracy=get_acuuracy(rf, X_test, y_test)
-print('Test accuracy: %.2f%%' %test_accuracy)
-
-
-adaBoost = AdaBoostClassifier(n_estimators=150)
-an.model_training(adaBoost, X_train, y_train)
-
-an.plot_auc_curve(adaBoost, X_test, y_test)
-an.Find_Optimal_Cutoff(adaBoost, X_test, y_test)
-an.print_accurcay_metrics(adaBoost, X_test, y_test, 0.5)
