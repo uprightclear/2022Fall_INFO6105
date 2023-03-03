@@ -15,3 +15,5 @@ submit a csv file with two columns: image_id and set and predicted_class.
 Accuracy Metric: Accuracy will be used to evaluate the model performance. 
 Reference: 2018 – Özgenel, Ç.F., Gönenç Sorguç, A. “Performance Comparison of Pretrained 
 Convolutional Neural Networks on Crack Detection in Buildings”, ISARC 2018, Berlin.
+
+Slides: [Surface Crack Detection](https://docs.google.com/presentation/d/1SI5lk4zTMBLmwCKiUtK_Fe8Wf5G027Rc3r_yKifbH_c/edit#slide=id.p)
